@@ -55,4 +55,158 @@ $_SERVER['SCRIPT_NAME']	-->  Returns the path of the current script
 $_SERVER['SCRIPT_URI']	-->  Returns the URI of the current page
 
 */
+
+
+
+// $_REQUEST
+// The PHP $_REQUEST is a PHP superglobal variable that is used to collect the data after submitting an HTML form. The $_REQUEST superglobal is an associative array which also contains the contents of $_GET, $_POST and $_COOKIE superglobals. 
+<html>
+<body>
+
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>"> // Server Info
+  Name: <input type="text" name="fname">
+  <input type="submit">
+</form>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // collect value of input field
+  $name = $_REQUEST['fname'];  //Using $_REQUEST Superglobal
+  if (empty($name)) {
+    echo "Name is empty";
+  } else {
+    echo $name;
+  }
+}
+?>
+
+</body>
+</html>
+
+
+// $_POST
+
+/*The PHP $_POST is a PHP superglobal which is used to collect form data after submitting an HTML form using method="post". In the following example, we will use the $_POST superglobal to collect a value. 
+
+htmlentities() Function: The htmlentities() function is an inbuilt function that is used to transform all characters which are applicable to HTML entities.
+*/
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$name = htmlspecialchars($_REQUEST['fname']); //Collecting Value
+if (empty($name)) {
+echo "Empty Name";
+} else {
+echo $name;
+}
+}
+
+
+
+/* $_GET
+The PHP $_GET is a PHP superglobal which is used to collect form data after submitting an HTML form using method="get". Information sent from an HTML form with the GET method is displayed in the browser's address bar making it less secure than POST. 
+
+Let's assume we have a HTML form that takes name and email as an input and sends it to anothe file named "name_get.php". We can access the values of "name_get.php" with $_GET superglobal.
+*/
+
+
+<form action="name_get.php" method="get">
+Name: <input type="text" name="name">
+Email: <input type="text" name="email">
+<input type="submit">
+</form>
+
+// name_get.php
+Welcome <?php echo $_GET["name"]; ?>!
+Your email address is <?php echo $_GET["email"]; ?>
+
+
+
+
+
+/* Creating Cookies with PHP
+A cookie can be created with the setcookie() function. 
+
+Syntax:
+ */
+setcookie(name, value, expire, path, domain, secure, httponly);
+/*
+Parameters
+Name − Name of the cookie stored.
+Value − This sets the value of the named variable.
+Expiry − This specifes a future time in seconds since 00:00:00 GMT on 1st Jan 1970.
+Path − Directories for which the cookie is valid.
+Domain − Specifies the domain name in very large domains.
+Security − 1 for HTTPS. Default 0 for regular HTTP.
+*/
+
+<?php
+$cookie_name = "username";
+$cookie_value = "rohan";
+//The setcookie() function must appear BEFORE the <html> tag.
+setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+?>
+<html>
+<body>
+
+<?php
+if(!isset($_COOKIE[$cookie_name])) {
+  echo "Cookie named '" . $cookie_name . "' is not set!";
+} else {
+  echo "Cookie '" . $cookie_name . "' is set!<br>";
+  echo "Value is: " . $_COOKIE[$cookie_name];
+}
+?>
+
+</body>
+</html>
+
+
+
+// Modifying a Cookie
+// To modify a cookie, just set the cookie again using the setcookie() function.
+
+/*
+<?php
+$cookie_name = "username";
+$cookie_value = "aakash";
+//The setcookie() function must appear BEFORE the <html> tag.
+setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+?>
+<html>
+<body>
+
+<?php
+if(!isset($_COOKIE[$cookie_name])) {
+  echo "Cookie named '" . $cookie_name . "' is not set!";
+} else {
+  echo "Cookie '" . $cookie_name . "' is set!<br>";
+  echo "Value is: " . $_COOKIE[$cookie_name];
+}
+?>
+
+</body>
+</html>
+*/
+
+
+
+// Delete a Cookie
+// To delete a cookie, we need to use the setcookie() function with a date that has already expired. 
+
+
+<?php
+// set the expiration date to one day ago
+setcookie("username", "", time() - 86400);
+?>
+<html>
+<body>
+
+<?php
+echo "Cookie 'user' is deleted.";
+?>
+
+</body>
+</html>
+ 
+
 ?>
