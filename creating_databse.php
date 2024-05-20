@@ -22,7 +22,7 @@ if($result){
     echo "The Database created successfully! <br>";
 }
 else{
-    echo "The database was not created  ------>> " .mysqli_error($conn);
+    echo "The database was not created  ---> " .mysqli_error($conn);
 }
 
 ?>
